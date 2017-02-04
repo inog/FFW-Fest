@@ -109,12 +109,11 @@ function insertData($post, $link){
 			where code = '".mysqli_real_escape_string($link, $post['voucher'])."'";
 	//var_dump (mysqli_query($link, $sql));
 	//var_dump(mysqli_error($link));
-	echo $sql;
+	//echo $sql;
 	return mysqli_query($link, $sql);
 }
 
 function sendMail($post){
-			$to = "kontakt@ingo-reschke.de";
 			$subject = "Anmeldung zum Feuerwehrfest in Velber";
 			$email = $post["CONTACT_EMAIL"];
 			$name = $post['CONTACT_NAME'];
@@ -128,17 +127,16 @@ function sendMail($post){
 			'Content-type: text/plain; charset=UTF-8' . "\r\n";
 			// Nachrichtenlayout erstellen
 			$message = '
-Ihre Daten:\n
-Voucher:\t'.$voucher.'\n
-Email:\t'.$email.'\n
-Ansprechpartner:\t'.$name.'\n
-Kommers:\t'.$kommers.'\n
-Kommers mit Essen:\t'.$kommersEssen.'\n
-Ausmarsch:\t'.$a.'\n
-Musikzug:\t'.$m.'\n
-Teilnahme:\t'.$t.'\n
-';
-			// Verschicken der Mail
-			$mailsuccess = mail($to, $subject, $message, $mail_header );	
+Ihre Daten
+
+Voucher:			'.$voucher.'
+Email:				'.$email.'
+Ansprechpartner:'.$name.'
+Kommers:			'.$kommers.'
+Kommers Essen:	'.$kommersEssen.'
+Ausmarsch:		'.$a.'
+Musikzug:			'.$m.'
+Teilnahme:			'.$t;
+	$mailsuccess = mail($email, $subject, $message, $mail_header );	
 	 		
 }
