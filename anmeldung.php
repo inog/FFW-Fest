@@ -66,28 +66,37 @@ function printForm($data){
 	
 	echo '<form action="anmeldung.php" method="POST"> ';
 	echo '<input type="hidden" id="voucher" name="voucher" value="'. $data["CODE"] .'"/>';	
-	echo '<label for="email">Kontakt Email</label> <input id="email" type="text" name="CONTACT_EMAIL" value="'. $data["CONTACT_EMAIL"] .'" required /> ';
-	echo '<label for="name">Ansprechpartner</label> <input id="name" type="text" name="CONTACT_NAME" value="'. $data["CONTACT_NAME"] .'" required /> ';
-	echo '<label for="kommers">Kommers</label><input id="kommers" type="number" name="COUNT_KOMMERS" value="'. $data["COUNT_KOMMERS"] .'"min="1" max="100" required /> ';
-	echo '<label for="kommersEssen">Kommers mit Essen</label><input id="kommersEssen" type="number" name="COUNT_KOMMERS_ESSEN" value="'. $data["COUNT_KOMMERS_ESSEN"] .'" min="1" max="100" required /> ';
-	echo'<label for="ausmarsch">Beim Ausmarsch dabei</label>';
-	if ($data["AUSMARSCH"] == 1){
-		echo '<input id="ausmarsch" type="checkbox" name="AUSMARSCH" value="1" checked="checked"/>';
-	}else{
-		echo '<input id="ausmarsch" type="checkbox" name="AUSMARSCH" value="1"/>';
-	}
-	echo'<label for="musikzug">Musikzug dabei</label>';
-	if ($data["MUSIKZUG"] == 1){
-		echo '<input id="musikzug" type="checkbox" name="MUSIKZUG" value="1" checked="checked"/>';
-	}else{
-		echo '<input id="musikzug" type="checkbox" name="MUSIKZUG" value="1"/>';
-	}
-	echo'<label for="teilnahme">Wir nehmen Teil</label>';
-	if ($data["TEILNAHME"] == 1){
-		echo '<input id="teilnahme" type="checkbox" name="TEILNAHME" value="1" checked="checked"/>';
-	}else{
-		echo '<input id="teilnahme" type="checkbox" name="TEILNAHME" value="1" />';
-	}	
+	echo'<table>
+	<tr>
+		<td><label for="email">Kontakt Email</label></td> 
+		<td><input id="email" type="text" name="CONTACT_EMAIL" value="'. $data["CONTACT_EMAIL"] .'" required /> </td>
+	</tr>
+	<tr>
+	<td><label for="name">Ansprechpartner</label></td> 
+	<td><input id="name" type="text" name="CONTACT_NAME" value="'. $data["CONTACT_NAME"] .'" required /> </td>
+	</tr>
+	<tr>
+	<td><label for="kommers">Kommers</label></td>
+	<td><input id="kommers" type="number" name="COUNT_KOMMERS" value="'. $data["COUNT_KOMMERS"] .'"min="1" max="100" required /> </td>
+	</tr>
+	<tr>
+	<td><label for="kommersEssen">Kommers mit Essen</label></td>
+	<td><input id="kommersEssen" type="number" name="COUNT_KOMMERS_ESSEN" value="'. $data["COUNT_KOMMERS_ESSEN"] .'" min="1" max="100" required /> </td>
+	</tr>
+	<tr>
+	<td><label for="ausmarsch">Beim Ausmarsch dabei</label></td>
+	<td><input id="ausmarsch" type="checkbox" name="AUSMARSCH" value="1" '; if ($data["AUSMARSCH"] == 1){ echo 'checked="checked" ';}  echo '/> </td>
+	</tr>
+	<tr>
+	<td><label for="musikzug">Musikzug dabei</label></td>
+	<td><input id="musikzug" type="checkbox" name="MUSIKZUG" value="1" '; if ($data["MUSIKZUG"] == 1){ echo 'checked="checked" ';} echo '/> </td>
+	</tr>
+	<tr>
+	<td><label for="teilnahme">Wir nehmen Teil</label> </td>
+	<td><input id="teilnahme" type="checkbox" name="TEILNAHME" value="1"';if ($data["TEILNAHME"] == 1){ echo 'checked="checked" ';} echo'/> </td>
+	</tr>
+	</table>';
+	
 	echo '<input type="submit" value="senden" />';
 	echo '</form>';
 	echo '</div></body></html>';
@@ -128,7 +137,6 @@ function sendMail($post){
 			$voucher = $post['voucher'];
 			$mail_header = "From:feuerwehrfest@feuerwehr-velber.de <feuerwehrfest@feuerwehr-velber.de>\r\n".
 			'Content-type: text/html; charset=UTF-8' . "\r\n";
-			// Nachrichtenlayout erstellen
 			$message = '
 <h1>Ihre Daten</h1>
 
