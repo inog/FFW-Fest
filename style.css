@@ -1,6 +1,18 @@
 
+body{
+	font-size:1em;
+	font-family: Tahoma, Arial, verdana;
+}
 
 #main {
 	width:30%;	
 	margin:auto;
+}
+
+.inptext{
+	width:100%;
+}
+
+.inpnumber{
+	width:20%;
 }

@@ -69,19 +69,19 @@ function printForm($data){
 	echo'<table>
 	<tr>
 		<td><label for="email">Kontakt Email</label></td> 
-		<td><input id="email" type="text" name="CONTACT_EMAIL" value="'. $data["CONTACT_EMAIL"] .'" required /> </td>
+		<td><input id="email" type="text" class="inptext" name="CONTACT_EMAIL" value="'. $data["CONTACT_EMAIL"] .'" required /> </td>
 	</tr>
 	<tr>
 	<td><label for="name">Ansprechpartner</label></td> 
-	<td><input id="name" type="text" name="CONTACT_NAME" value="'. $data["CONTACT_NAME"] .'" required /> </td>
+	<td><input id="name" type="text" class="inptext" name="CONTACT_NAME" value="'. $data["CONTACT_NAME"] .'" required /> </td>
 	</tr>
 	<tr>
 	<td><label for="kommers">Kommers</label></td>
-	<td><input id="kommers" type="number" name="COUNT_KOMMERS" value="'. $data["COUNT_KOMMERS"] .'"min="1" max="100" required /> </td>
+	<td><input id="kommers" type="number" class="inpnumber" name="COUNT_KOMMERS" value="'. $data["COUNT_KOMMERS"] .'"min="1" max="100" required /> </td>
 	</tr>
 	<tr>
 	<td><label for="kommersEssen">Kommers mit Essen</label></td>
-	<td><input id="kommersEssen" type="number" name="COUNT_KOMMERS_ESSEN" value="'. $data["COUNT_KOMMERS_ESSEN"] .'" min="1" max="100" required /> </td>
+	<td><input id="kommersEssen" type="number" class="inpnumber" name="COUNT_KOMMERS_ESSEN" value="'. $data["COUNT_KOMMERS_ESSEN"] .'" min="1" max="100" required /> </td>
 	</tr>
 	<tr>
 	<td><label for="ausmarsch">Beim Ausmarsch dabei</label></td>
