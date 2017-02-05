@@ -33,6 +33,9 @@ if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE
 			sendMail($_POST);
 
 	 		//	header('Location:anmeldung.php?voucher='.$_POST["voucher"]);
+	 		
+	 		echo '<h1>Vielen Dank für Ihre Mitteilung.</h1>';
+	 		exit;
 	 	}
 	}
 	
@@ -124,19 +127,41 @@ function sendMail($post){
 			$t = isset($post['TEILNAHME']) ?'Ja' : 'Nein';
 			$voucher = $post['voucher'];
 			$mail_header = "From:feuerwehrfest@feuerwehr-velber.de <feuerwehrfest@feuerwehr-velber.de>\r\n".
-			'Content-type: text/plain; charset=UTF-8' . "\r\n";
+			'Content-type: text/html; charset=UTF-8' . "\r\n";
 			// Nachrichtenlayout erstellen
 			$message = '
-Ihre Daten
+<h1>Ihre Daten</h1>
 
-Voucher:			'.$voucher.'
-Email:				'.$email.'
-Ansprechpartner:'.$name.'
-Kommers:			'.$kommers.'
-Kommers Essen:	'.$kommersEssen.'
-Ausmarsch:		'.$a.'
-Musikzug:			'.$m.'
-Teilnahme:			'.$t;
+<table> 
+<tr>
+	<td>Voucher:</td>
+	<td>	'.$voucher.'</td>
+</tr><tr>
+	<td>Email:</td>
+	<td>'.$email.'</td>
+</tr><tr>
+	<td>Ansprechpartner:</td>
+	<td>'.$name.'</td>
+</tr><tr>
+	<td>Kommers:</td>
+	<td>'.$kommers.'</td>
+</tr><tr>
+	<td>Kommers Essen:	</td>
+	<td>'.$kommersEssen.'</td>
+</tr><tr>
+	<td>Ausmarsch:</td>
+	<td>'.$a.'</td>
+</tr><tr>
+	<td>Musikzug:</td>
+	<td>'.$m.'</td>
+</tr>
+</tr><tr>
+	<td>Teilnahme:	</td>
+	<td>'.$t.'</td>
+</tr>
+</table>';
+
+				
 	$mailsuccess = mail($email, $subject, $message, $mail_header );	
 	 		
 }
