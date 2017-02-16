@@ -76,24 +76,24 @@ function printForm($data){
 	<td><input id="name" type="text" class="inptext" name="CONTACT_NAME" value="'. $data["CONTACT_NAME"] .'" required /> </td>
 	</tr>
 	<tr>
-	<td><label for="kommers">Kommers</label></td>
+	<td><label for="kommers">Teilnehmer Kommers</label></td>
 	<td><input id="kommers" type="number" class="inpnumber" name="COUNT_KOMMERS" value="'. $data["COUNT_KOMMERS"] .'"min="1" max="100" required /> </td>
 	</tr>
 	<tr>
-	<td><label for="kommersEssen">Kommers mit Essen</label></td>
+	<td><label for="kommersEssen">Anmeldungen zum Essen</label></td>
 	<td><input id="kommersEssen" type="number" class="inpnumber" name="COUNT_KOMMERS_ESSEN" value="'. $data["COUNT_KOMMERS_ESSEN"] .'" min="1" max="100" required /> </td>
 	</tr>
 	<tr>
-	<td><label for="ausmarsch">Beim Ausmarsch dabei</label></td>
-	<td><input id="ausmarsch" type="checkbox" name="AUSMARSCH" value="1" '; if ($data["AUSMARSCH"] == 1){ echo 'checked="checked" ';}  echo '/> </td>
+	<td><label for="ausmarsch">Teilnehmer Ausmarsch</label></td>
+	<td><input id="ausmarsch" type="number" class="inputnumber" name="AUSMARSCH" value="'.$data["AUSMARSCH"].'"/> </td>
 	</tr>
 	<tr>
-	<td><label for="musikzug">Musikzug dabei</label></td>
+	<td><label for="musikzug">mit Musikzug</label></td>
 	<td><input id="musikzug" type="checkbox" name="MUSIKZUG" value="1" '; if ($data["MUSIKZUG"] == 1){ echo 'checked="checked" ';} echo '/> </td>
 	</tr>
 	<tr>
-	<td><label for="teilnahme">Wir nehmen Teil</label> </td>
-	<td><input id="teilnahme" type="checkbox" name="TEILNAHME" value="1"';if ($data["TEILNAHME"] == 1){ echo 'checked="checked" ';} echo'/> </td>
+	<td><label for="teilnahme">Wir können leider nicht teilnehmen</label> </td>
+	<td><input id="teilnahme" type="checkbox" name="TEILNAHME" value="1"';if ($data["ABSAGE"] == 1){ echo 'checked="checked" ';} echo'/> </td>
 	</tr>
 	</table>';
 	
@@ -103,7 +103,6 @@ function printForm($data){
 }
 
 function insertData($post, $link){
-	$a = isset($post['AUSMARSCH']) ?1 : 0;
 	$m= isset($post['MUSIKZUG']) ?1 : 0;
 	$t = isset($post['TEILNAHME']) ?1 : 0;
 	$data = array(
@@ -111,15 +110,15 @@ function insertData($post, $link){
 		"`CONTACT_NAME` = '" . mysqli_real_escape_string($link, $post['CONTACT_NAME']). "'",
 		"`COUNT_KOMMERS` = '" . mysqli_real_escape_string($link, $post['COUNT_KOMMERS']). "'",
 		"`COUNT_KOMMERS_ESSEN` = '" . mysqli_real_escape_string($link, $post['COUNT_KOMMERS_ESSEN']). "'",
-		"`AUSMARSCH` = " . $a,
+		"`AUSMARSCH` = '" .  mysqli_real_escape_string($link, $post['AUSMARSCH']). "'",
 		"`MUSIKZUG` = "  . $m,
-		"`TEILNAHME` = " . $t,
+		"`ABSAGE` = " . $t,
 		"`UPDATED`= '" . date("Y-m-d H:i:s")."'"
 	);
 	$sql = "update FWV_REGISTRATIONS 
 				SET " .implode(', ', $data) . "  
 			where code = '".mysqli_real_escape_string($link, $post['voucher'])."'";
-	//var_dump (mysqli_query($link, $sql));
+	var_dump (mysqli_query($link, $sql));
 	//var_dump(mysqli_error($link));
 	//echo $sql;
 	return mysqli_query($link, $sql);
@@ -133,7 +132,7 @@ function sendMail($post){
 			$kommersEssen = $post['COUNT_KOMMERS_ESSEN'];
 			$a = isset($post['AUSMARSCH']) ?'Ja' : 'Nein';
 			$m= isset($post['MUSIKZUG']) ?'Ja' : 'Nein';
-			$t = isset($post['TEILNAHME']) ?'Ja' : 'Nein';
+			$t = isset($post['ABSAGE']) ?'JA' : 'Nein';
 			$voucher = $post['voucher'];
 			$mail_header = "From:feuerwehrfest@feuerwehr-velber.de <feuerwehrfest@feuerwehr-velber.de>\r\n".
 			'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -164,7 +163,7 @@ function sendMail($post){
 	<td>'.$m.'</td>
 </tr>
 </tr><tr>
-	<td>Teilnahme:	</td>
+	<td>Absage:	</td>
 	<td>'.$t.'</td>
 </tr>
 </table>';
