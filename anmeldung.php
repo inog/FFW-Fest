@@ -18,30 +18,34 @@ if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE
     
     $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
     
-    //print_r($data);
     
 	if(!$data){
 		header('Location:index.html');
 	}
 	
 	if(isset($_POST['voucher'])){
-		//print_r($_POST);
 		
 	 	$success=	insertData($_POST, $db_link);
-	 	print_r($success);
+	 	
 	 	if($success){
 			sendMail($_POST);
 
 	 		//	header('Location:anmeldung.php?voucher='.$_POST["voucher"]);
 	 		
-	 		echo '<h1>Vielen Dank für Ihre Mitteilung.</h1>';
+	 		echo '<!DOCTYPE html>
+			<html lang="de">
+				<head>
+					<meta charset="utf-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<title>Feuerwehrfest Velber</title>
+					<link rel="stylesheet" href="style.css">
+				</head>
+			<body>';
+	 		echo '<div id="main"><h1>Vielen Dank für Ihre Mitteilung.</h1></div>';
+	 		echo '</body></html>';
 	 		exit;
 	 	}
 	}
-	
-	
-	
-
 	printForm($data);
     /* free result set */
     mysqli_free_result($result);
@@ -60,8 +64,10 @@ function printForm($data){
 				</head>
 		<body>
 		<div id="main">
-		<h1>Willkommen '.$data["OFW_NAME"].'</h1>
-		<h2>105 Jahre Freiwillige Feuerwehr Velber. 1 - 3 September</h2>';
+		<h1 class="title">Willkommen</h1>
+		<h1 class="title">'.$data["OFW_NAME"].'</h1>
+		<h2 class="title">105 Jahre Freiwillige Feuerwehr Velber</h2>
+		<h3 class="title">01. - 03.09.2017</h3>';
 		
 	
 	echo '<form action="anmeldung.php" method="POST"> ';
@@ -85,7 +91,7 @@ function printForm($data){
 	</tr>
 	<tr>
 	<td><label for="ausmarsch">Teilnehmer Ausmarsch</label></td>
-	<td><input id="ausmarsch" type="number" class="inputnumber" name="AUSMARSCH" value="'.$data["AUSMARSCH"].'"/> </td>
+	<td><input id="ausmarsch" type="number" class="inpnumber" name="AUSMARSCH" value="'.$data["AUSMARSCH"].'"/> </td>
 	</tr>
 	<tr>
 	<td><label for="musikzug">mit Musikzug</label></td>
@@ -118,7 +124,7 @@ function insertData($post, $link){
 	$sql = "update FWV_REGISTRATIONS 
 				SET " .implode(', ', $data) . "  
 			where code = '".mysqli_real_escape_string($link, $post['voucher'])."'";
-	var_dump (mysqli_query($link, $sql));
+	//var_dump (mysqli_query($link, $sql));
 	//var_dump(mysqli_error($link));
 	//echo $sql;
 	return mysqli_query($link, $sql);
