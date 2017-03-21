@@ -8,12 +8,12 @@ if (! $db_link ) {
 }
 
 if (! isset($_REQUEST["voucher"])){
-	header('Location:login.html');
+	header('Location:index.html');
 }
 $voucher = $_REQUEST["voucher"];
 //echo $voucher;
 
-if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE = $voucher LIMIT 1")) {
+if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE = '$voucher' LIMIT 1")) {
     //print_r($result);
     
     $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -21,7 +21,7 @@ if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE
     //print_r($data);
     
 	if(!$data){
-		header('Location:login.html');
+		header('Location:index.html');
 	}
 	
 	if(isset($_POST['voucher'])){

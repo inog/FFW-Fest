@@ -1,0 +1,19 @@
+--
+-- Tabellenstruktur für Tabelle `FWV_REGISTRATIONS`
+--
+
+CREATE TABLE IF NOT EXISTS `FWV_REGISTRATIONS` (
+  `CODE` varchar(10) COLLATE latin1_german1_ci NOT NULL,
+  `OFW_NAME` varchar(256) COLLATE latin1_german1_ci DEFAULT '',
+  `CONTACT_EMAIL` varchar(256) COLLATE latin1_german1_ci DEFAULT NULL,
+  `CONTACT_NAME` varchar(256) COLLATE latin1_german1_ci DEFAULT NULL,
+  `COUNT_KOMMERS` int(11) DEFAULT NULL,
+  `COUNT_KOMMERS_ESSEN` int(11) DEFAULT NULL,
+  `AUSMARSCH` int(1) DEFAULT NULL,
+  `MUSIKZUG` tinyint(1) DEFAULT NULL,
+  `ABSAGE` tinyint(1) DEFAULT NULL,
+  `UPDATED` datetime DEFAULT NULL,
+  PRIMARY KEY (`CODE`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+
+
