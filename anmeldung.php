@@ -2,6 +2,7 @@
 require_once('conf.php');
 $db_link = mysqli_connect (MYSQL_HOST,  MYSQL_USER,  MYSQL_PW, MYSQL_DB);
 header('Content-Type: text/html; charset=UTF-8');
+$mail_header = "From:feuerwehrfest@feuerwehr-velber.de <feuerwehrfest@feuerwehr-velber.de>\r\n".'Content-type: text/html; charset=UTF-8' . "\r\n";
 if (! $db_link ) { 
 	echo 'Verbindung nicht möglich: '; 
 	die;
@@ -11,7 +12,10 @@ if (! isset($_REQUEST["voucher"])){
 	header('Location:index.html');
 }
 $voucher = $_REQUEST["voucher"];
-//echo $voucher;
+if(strlen($voucher) 	!= 6){
+	$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch", $voucher, $mail_header );	
+	header('Location:index.html');
+}
 
 if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE = '$voucher' LIMIT 1")) {
     //print_r($result);
@@ -20,6 +24,7 @@ if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE
     
     
 	if(!$data){
+		$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch", $voucher, $mail_header );
 		header('Location:index.html');
 	}
 	
