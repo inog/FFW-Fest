@@ -13,8 +13,9 @@ if (! isset($_REQUEST["voucher"])){
 }
 $voucher = $_REQUEST["voucher"];
 if(strlen($voucher) 	!= 6){
-	$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch", $voucher, $mail_header );	
+	$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch len !=6", 'v='.$voucher, $mail_header );	
 	header('Location:index.html');
+	exit;
 }
 
 if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE = '$voucher' LIMIT 1")) {
@@ -24,8 +25,10 @@ if ($result = mysqli_query($db_link, "SELECT * FROM FWV_REGISTRATIONS WHERE CODE
     
     
 	if(!$data){
-		$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch", $voucher, $mail_header );
+		//var_dump($data);
+		$mailsuccess = mail(IR_EMAIL, "gescheiterter Loginversuch data", 'v='.$voucher.' data=NULL', $mail_header );
 		header('Location:index.html');
+		exit;
 	}
 	
 	if(isset($_POST['voucher'])){
